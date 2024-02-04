@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8-debian
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - "data:/var/lib/mysql"
+      - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./scripts/data.sql:/docker-entrypoint-initdb.d/2.sql"
+    command: --log-bin=/var/lib/mysql/bin-log.log
+
+volumes:
+  data:
+  binlog-backups:
